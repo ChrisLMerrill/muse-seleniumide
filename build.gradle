@@ -1,0 +1,63 @@
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+version = 0.18
+group = 'org.musetest'
+
+dependencies {
+    implementation 'org.musetest:muse-selenium:[0.17,)'
+    implementation 'org.jsoup:jsoup:1.12.1'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5+'
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+// until AppEngine upgrades to 9+...
+tasks.withType(JavaCompile) {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+test {
+    testLogging.showStandardStreams = true
+}
+
+task installDeps {
+	dependsOn gradle.includedBuilds*.task(':publishToMavenLocal')
+}
+
+wrapper {
+    gradleVersion = '5.6.2'
+}
