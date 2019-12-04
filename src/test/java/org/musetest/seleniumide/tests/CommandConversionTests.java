@@ -273,4 +273,35 @@ class CommandConversionTests
             // OK
             }
         }
+
+    @Test
+    void selectFrameByIndex() throws UnsupportedError
+        {
+        StepConfiguration step = StepConverters.get().convertStep("", "selectFrame", "index=7", "");
+        Assertions.assertEquals(SwitchTo.TYPE_ID, step.getType());
+        Assertions.assertEquals(7L, step.getSource(SwitchTo.TARGET_PARAM).getValue());
+        }
+
+    @Test
+    void selectParentFrame() throws UnsupportedError
+        {
+        StepConfiguration step = StepConverters.get().convertStep("", "selectFrame", "relative=parent", "");
+        Assertions.assertEquals(SwitchToParentFrame.TYPE_ID, step.getType());
+        }
+
+    @Test
+    void selectTopFrame() throws UnsupportedError
+        {
+        StepConfiguration step = StepConverters.get().convertStep("", "selectFrame", "relative=top", "");
+        Assertions.assertEquals(SwitchToTopFrame.TYPE_ID, step.getType());
+        }
+
+    @Test
+    void selectFrameByLocator() throws UnsupportedError
+        {
+        StepConfiguration step = StepConverters.get().convertStep("", "selectFrame", "css=#facilitymenu_DropDown > .caret", "");
+        Assertions.assertEquals(SwitchTo.TYPE_ID, step.getType());
+        Assertions.assertEquals(CssElementValueSource.TYPE_ID, step.getSource(SwitchTo.TARGET_PARAM).getType());
+        Assertions.assertEquals("#facilitymenu_DropDown > .caret", step.getSource(SwitchTo.TARGET_PARAM).getSource().getValue());
+        }
     }

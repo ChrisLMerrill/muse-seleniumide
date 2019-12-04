@@ -20,15 +20,15 @@ public class StepConverters implements StepConverter
         }
 
     @Override
-    public StepConfiguration convertStep(String base_url, String command, String param1, String param2) throws UnsupportedError
+    public StepConfiguration convertStep(String base_url, String command, String target, String value) throws UnsupportedError
         {
         for (StepConverter converter : _converters)
             {
-            StepConfiguration step = converter.convertStep(base_url, command, param1, param2);
+            StepConfiguration step = converter.convertStep(base_url, command, target, value);
             if (step != null)
                 return step;
             }
-        throw new UnsupportedError(String.format("Unknown command: %s (%s, %s)", command, param1, param2));
+        throw new UnsupportedError(String.format("Unknown command: %s (%s, %s)", command, target, value));
         }
 
     private StepConverters()
