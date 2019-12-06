@@ -6,7 +6,7 @@ repositories {
     jcenter()
 }
 
-version = 0.18
+version = 0.19
 group = 'org.musetest'
 
 dependencies {
@@ -45,7 +45,7 @@ artifacts {
 }
 
 tasks.withType(JavaCompile) {
-    sourceCompatibility = '11'
+    sourceCompatibility = '13'
     targetCompatibility = '11'
 }
 
