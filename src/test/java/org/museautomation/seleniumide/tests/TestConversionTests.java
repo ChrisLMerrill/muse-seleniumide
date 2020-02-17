@@ -3,7 +3,7 @@ package org.museautomation.seleniumide.tests;
 import org.junit.jupiter.api.*;
 import org.museautomation.seleniumide.*;
 import org.museautomation.core.step.*;
-import org.museautomation.core.steptest.*;
+import org.museautomation.core.steptask.*;
 import org.museautomation.selenium.locators.*;
 import org.museautomation.selenium.steps.*;
 
@@ -19,9 +19,9 @@ class TestConversionTests
     void convertExample() throws IOException, UnsupportedError
         {
         TestConverter converter = new TestConverter(getClass().getResourceAsStream("/example.html"));
-        SteppedTest test = converter.convert()._test;
+        SteppedTask task = converter.convert()._task;
 
-        List<StepConfiguration> steps = test.getStep().getChildren();
+        List<StepConfiguration> steps = task.getStep().getChildren();
 
         Assertions.assertEquals(OpenBrowser.TYPE_ID, steps.get(0).getType());
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.*;
 import org.junit.jupiter.api.*;
 import org.museautomation.seleniumide.*;
 import org.museautomation.core.step.*;
-import org.museautomation.core.steptest.*;
+import org.museautomation.core.steptask.*;
 import org.museautomation.selenium.steps.*;
 
 import java.io.*;
@@ -50,11 +50,11 @@ class SideFormatTests
 	    Assertions.assertEquals(8, result._total_steps);
 	    Assertions.assertEquals(0, result._errors.size());
 
-		SteppedTest test = result._test;
-		Assertions.assertEquals(BasicCompoundStep.TYPE_ID, test.getStep().getType());
-		Assertions.assertEquals(8, test.getStep().getChildren().size());
+        SteppedTask task = result._task;
+		Assertions.assertEquals(BasicCompoundStep.TYPE_ID, task.getStep().getType());
+		Assertions.assertEquals(8, task.getStep().getChildren().size());
 
-		StepConfiguration step1 = test.getStep().getChildren().get(0);
+		StepConfiguration step1 = task.getStep().getChildren().get(0);
 		Assertions.assertEquals(GotoUrl.TYPE_ID, step1.getType());
 		Assertions.assertEquals("https://the-internet.herokuapp.com", step1.getSource(GotoUrl.URL_PARAM).getValue());
 	    }

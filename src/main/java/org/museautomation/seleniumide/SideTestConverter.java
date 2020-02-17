@@ -1,7 +1,7 @@
 package org.museautomation.seleniumide;
 
 import org.museautomation.core.step.*;
-import org.museautomation.core.steptest.*;
+import org.museautomation.core.steptask.*;
 import org.museautomation.core.values.*;
 import org.museautomation.seleniumide.steps.*;
 
@@ -12,12 +12,12 @@ public class SideTestConverter
 	{
 	public ConversionResult convert(SideTest side_test, SideProject project)
 		{
-		final SteppedTest muse_test = new SteppedTest();
+		final SteppedTask muse_test = new SteppedTask();
 		StepConfiguration main_step = new StepConfiguration(BasicCompoundStep.TYPE_ID);
 		muse_test.setStep(main_step);
 
 		ConversionResult result = new ConversionResult();
-		result._test = muse_test;
+		result._task = muse_test;
 		StepConverters converters = StepConverters.get();
 		for (SideCommand command : side_test.commands)
 			{

@@ -1,6 +1,6 @@
 package org.museautomation.seleniumide;
 
-import org.museautomation.core.steptest.*;
+import org.museautomation.core.steptask.*;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class ConversionResult
     public boolean _success = true;
     public int _total_steps = 0;
     public List<String> _errors = new ArrayList<>();
-    public SteppedTest _test;
+    public SteppedTask _task;
     }
 
 

@@ -5,7 +5,7 @@ import org.jsoup.nodes.*;
 import org.jsoup.select.*;
 import org.museautomation.builtins.value.*;
 import org.museautomation.core.step.*;
-import org.museautomation.core.steptest.SteppedTest;
+import org.museautomation.core.steptask.*;
 import org.museautomation.core.values.*;
 import org.museautomation.selenium.steps.*;
 import org.museautomation.seleniumide.steps.*;
@@ -27,7 +27,7 @@ public class TestConverter
     public ConversionResult convert() throws IOException, UnsupportedError
         {
         Document doc = Jsoup.parse(_instream, "UTF-8", "http://ignored.com/");
-        _test = new SteppedTest(new StepConfiguration(BasicCompoundStep.TYPE_ID));
+        _task = new SteppedTask(new StepConfiguration(BasicCompoundStep.TYPE_ID));
 
         _base_url = doc.getElementsByTag("link").get(0).attr("href");
         if (!_base_url.endsWith("/"))
@@ -37,7 +37,7 @@ public class TestConverter
         generateSteps(doc);
         generateCloseBrowserStep();
 
-        _result._test = _test;
+        _result._task = _task;
         return _result;
         }
 
@@ -46,7 +46,7 @@ public class TestConverter
         StepConfiguration step = new StepConfiguration(OpenBrowser.TYPE_ID);
         step.addSource(OpenBrowser.PROVIDER_PARAM, ValueSourceConfiguration.forTypeWithSource(VariableValueSource.TYPE_ID, DEFAULT_PROVIDER_NAME));
         step.addSource(OpenBrowser.BROWSER_PARAM, ValueSourceConfiguration.forTypeWithSource(VariableValueSource.TYPE_ID, DEFAULT_BROWSER_NAME));
-        _test.getStep().addChild(step);
+        _task.getStep().addChild(step);
         }
 
     private void generateSteps(Document doc) throws UnsupportedError
@@ -71,7 +71,7 @@ public class TestConverter
             StepConfiguration step = _converters.convertStep(getBaseUrl(), command, param1, param2);
             if (step != null)
                 {
-                _test.getStep().addChild(step);
+                _task.getStep().addChild(step);
                 return;
                 }
             }
@@ -90,13 +90,13 @@ public class TestConverter
         comment.addSource("param1", ValueSourceConfiguration.forValue(param1));
         comment.addSource("param2", ValueSourceConfiguration.forValue(param2));
         comment.setMetadataField(StepConfiguration.META_DESCRIPTION, String.format("%s(%s,%s)", command, param1, param2));
-        _test.getStep().addChild(comment);
+        _task.getStep().addChild(comment);
         }
 
     private void generateCloseBrowserStep()
         {
         StepConfiguration step = new StepConfiguration(CloseBrowser.TYPE_ID);
-        _test.getStep().addChild(step);
+        _task.getStep().addChild(step);
         }
 
     public String getBaseUrl()
@@ -106,7 +106,7 @@ public class TestConverter
 
     private final InputStream _instream;
     private String _base_url;
-    private SteppedTest _test;
+    private SteppedTask _task;
     private StepConverters _converters = StepConverters.get();
     private ConversionResult _result = new ConversionResult();
 
