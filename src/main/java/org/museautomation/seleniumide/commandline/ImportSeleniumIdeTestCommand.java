@@ -66,7 +66,7 @@ public class ImportSeleniumIdeTestCommand extends MuseCommand
                 return;
                 }
 
-            ObjectMapper mapper = JsonMapperFactory.createMapper(new TypeLocator((MuseProject)null));
+            ObjectMapper mapper = JsonMapperFactory.createMuseTypeMapper(new TypeLocator((MuseProject)null));
             outstream = new FileOutputStream(outfile);
             mapper.writeValue(outstream, result._task);
 
